@@ -109,6 +109,13 @@ public class SpringSecurityConfig {
 
     /**
      * 配置SecurityFilterChain对象
+     * <br />〓测试地址〓
+     * <br /><a href="http://localhost:8080/adminAuth/test">adminAuth</a>
+     * <br /><a href="http://localhost:8080/userAuth/test">userAuth</a>
+     * <br /><a href="http://localhost:8080/otherAuth/test">otherAuth</a>
+     * <br /><a href="http://localhost:8080/login/page">登录页</a>
+     * <br /><a href="http://localhost:8080/login/account">登录验证接口</a>
+     * <br /><a href="http://localhost:8080/logout/index">登出页</a>
      *
      * @param http 这个参数Spring Security会自动装配
      * @return SecurityFilterChain对象
@@ -123,10 +130,10 @@ public class SpringSecurityConfig {
                                 // 允许任何人（包括未认证的匿名用户）自由访问
                                 .requestMatchers("/login/page", "/logout/result", "/login/account").permitAll() // 登录页面允许任意访问
                                 // 限定"/file/**"下所有请求赋予角色ROLE_USER或者ROLE_ADMIN
-                                .requestMatchers("/common/**").hasAnyRole("USER", "ADMIN") // hasAnyRoleO方法会默认加入前缀ROLE_
+                                .requestMatchers("/userAuth/**").hasAnyRole("USER", "ADMIN") // hasAnyRoleO方法会默认加入前缀ROLE_
                                 // 限定"/excel/**"下所有请求权限赋予角色ROLE_ADMIN
 //                                .requestMatchers("/excel/**").hasAuthority("ROLE_ADMIN") // hasAuthority()方法不会加入任何前缀
-                                .requestMatchers("/excel/**", "/actuator/**").access(this.verifyAuth("ROLE_ADMIN")) // 自定义验证方法
+                                .requestMatchers("/adminAuth/**", "/actuator/**").access(this.verifyAuth("ROLE_ADMIN")) // 自定义验证方法
                                 // 【对于所有未被前面规则匹配的请求路径】都需要认证
                                 .anyRequest().authenticated()
 //                                // 【对于所有未被前面规则匹配的请求路径】都允许任何人（包括未认证的匿名用户）自由访问，不需要任何权限验证
@@ -148,13 +155,15 @@ public class SpringSecurityConfig {
                 // 4、表单登录配置
 //                .formLogin(withDefaults()) // 使用默认表单登录页
                 .formLogin(form -> form.loginPage("/login/page") // 自定义登录页面url
-                        .loginProcessingUrl("/login/account") // 自定义登录处理地址(表单提交登录地址)，默认为/login/page(与自定义登录页面url相同)
+                        .loginProcessingUrl("/login/account") // 自定义登录处理地址(表单post提交登录地址)，默认为/login/page(与自定义登录页面url相同)
                         .usernameParameter("username") // 登录表单中用户名输入框的参数名(对应name="username")，默认为username
                         .passwordParameter("password") // 登录表单中密码输入框的参数名(对应name="password")，默认为password
                         .defaultSuccessUrl("/login/welcome") // 登录成功后跳转的页面url
-                ) // 自定义登录页
+                ) // 自定义登录
                 // 5、退出登录配置
-                .logout(logout -> logout.logoutUrl("/logout/page").logoutSuccessUrl("/logout/result")) // 自定义登出，post登出地址/logout/page，打开登出页面http://localhost:8080/logout/index
+                .logout(logout -> logout.logoutUrl("/logout/page") // 自定义登出处理地址(表单post提交登录地址)，默认为/logout
+                        .logoutSuccessUrl("/logout/result") // 登出成功后跳转的页面url
+                ) // 自定义登出
                 // 6、HTTP基础认证配置
 //                .httpBasic(withDefaults()) // 启用HTTP基础认证（HTTP Basic验证是浏览器自动弹出简单的模态对话框的功能）
                 // 7、session管理配置
@@ -180,7 +189,7 @@ public class SpringSecurityConfig {
     }
 
     /**
-     * 创建持久化token存储（使用内存存储，生产环境应使用数据库）
+     * 为Spring Security的“记住我”（Remember-Me）功能提供持久化令牌的存储机制
      */
     @Bean
     public PersistentTokenRepository getPersistentTokenRepository() {
@@ -207,7 +216,7 @@ public class SpringSecurityConfig {
         return (authSupplier, reqAuthContext) -> {
 //            HttpServletRequest request = reqAuthContext.getRequest(); // 获取HttpServletRequest对象
 //            Map<String, String> vars = reqAuthContext.getVariables(); // 获取请求参数
-            var auths = authSupplier.get().getAuthorities(); // 当前用户的权限信息，比如角色
+            var auths = authSupplier.get().getAuthorities(); // 当前用户的角色权限信息
 
             for (var auth : auths) {
                 var roleName = auth.getAuthority();
