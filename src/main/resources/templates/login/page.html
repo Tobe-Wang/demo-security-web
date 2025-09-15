@@ -1,0 +1,24 @@
+<!--
+  ~ Copyright (c) 2025. Tobe Wang
+  -->
+
+<!-- 登录页（/templates/login/page.html）-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>登录页面</title>
+</head>
+<body>
+<!--表单中的用户名username，密码password，记住我remember-me(checkbox复选框)，此为Spring Security约定-->
+<form id="login_form" method="post" action="/login/account">
+    <p>名称：<input id="username" name="username" type="text" value=""/></p>
+    <p>密码：<input id="password" name="password" type="password" value=""/></p>
+    <p>记住我：<input id="remember_me" name="remember-me" type="checkbox"></p>
+    <!-- 防止CSRF攻击-->
+    <input type="hidden" th:value="${_csrf.token}" th:name="${_csrf.parameterName}"/>
+    <input type="submit" value="提交"/>
+</form>
+</body>
+</html>

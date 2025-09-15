@@ -1,0 +1,20 @@
+<!--
+  ~ Copyright (c) 2025. Tobe Wang
+  -->
+
+<!-- 登出页面（/templates/logout/page.html）-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>登出</title>
+</head>
+<body>
+<form action="/logout/page" method="POST"> <!--①-->
+    <p><input type="submit" value="登出"></p>
+    <!-- 防止CSRF攻击-->
+    <input type="hidden" th:value="${_csrf.token}" th:name="${_csrf.parameterName}"/>
+</form>
+</body>
+</html>
