@@ -20,7 +20,7 @@ public class LogoutController {
      * @return String
      */
     @GetMapping("/index")
-    public String page() {
+    public String index() {
         return "logout/page";
     }
 

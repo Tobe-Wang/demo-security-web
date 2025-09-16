@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/adminAuth")
 public class AdminAuthController {
     @GetMapping(value = "/test")
-    public String getById() {
+    public String test() {
         return "adminAuth";
     }
 }
