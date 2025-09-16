@@ -51,13 +51,6 @@
             <scope>runtime</scope>
         </dependency>
         <!-- spring-boot结束 -->
-
-        <!-- Spring Boot默认使用Jackson来处理JSON，引入jackson-dataformat-xml后同时可以使用Jackson的XML扩展来处理XML -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.19.1</version>
-        </dependency>
     </dependencies>
 
     <build>
