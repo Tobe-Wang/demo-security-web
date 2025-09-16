@@ -97,10 +97,12 @@ public class SpringSecurityConfig {
             // 角色权限列表
             List<GrantedAuthority> authList = new ArrayList<>();
             // 转换为权限列表
-            for (UserRole role : sysUser.getRoleList()) {
-                //noinspection Convert2MethodRef
-                GrantedAuthority auth = () -> role.getRoleName();
-                authList.add(auth);
+            if (sysUser.getRoleList() != null) {
+                for (UserRole role : sysUser.getRoleList()) {
+                    //noinspection Convert2MethodRef
+                    GrantedAuthority auth = () -> role.getRoleName();
+                    authList.add(auth);
+                }
             }
             // 创建用户详情
             return new User(sysUser.getUserName(), sysUser.getPwd(), authList);
