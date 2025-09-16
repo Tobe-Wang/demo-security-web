@@ -14,6 +14,7 @@ import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -146,7 +147,7 @@ public class SpringSecurityConfig {
                 // 2、匿名访问配置
 //                .anonymous(withDefaults()) // 使用默认匿名配置(对于没有配置权限的其他请求允许匿名访问)
 //                .anonymous(anon -> anon.disable()) // 禁用匿名访问
-                // 3、启用”记住我“的功能
+                // 3、启用”记住我“的功能配置
                 .rememberMe(rem -> rem.tokenValiditySeconds(86400) // 超时时间为1天（86400秒）
                         .key("pwd@123QWE") // 设置Remember-Me令牌的安全密钥
                         .rememberMeParameter("remember-me") // 指定登录表单中"记住我"复选框的参数名(对应name="remember-me")
@@ -156,8 +157,8 @@ public class SpringSecurityConfig {
                 )
                 // 4、表单登录配置
 //                .formLogin(withDefaults()) // 使用默认表单登录页
-                .formLogin(form -> form.loginPage("/login/page") // 自定义登录页面url
-                        .loginProcessingUrl("/login/account") // 自定义登录处理地址(表单post提交登录地址)，默认为/login/page(与自定义登录页面url相同)
+                .formLogin(form -> form.loginPage("/login/page") // 自定义登录页面url，默认为/login
+                        .loginProcessingUrl("/login/account") // 自定义登录处理地址(表单post提交登录地址)，默认与自定义登录页面url相同
                         .usernameParameter("username") // 登录表单中用户名输入框的参数名(对应name="username")，默认为username
                         .passwordParameter("password") // 登录表单中密码输入框的参数名(对应name="password")，默认为password
                         .defaultSuccessUrl("/login/welcome") // 登录成功后跳转的页面url
@@ -170,11 +171,13 @@ public class SpringSecurityConfig {
 //                .httpBasic(withDefaults()) // 启用HTTP基础认证（HTTP Basic验证是浏览器自动弹出简单的模态对话框的功能）
                 // 7、session管理配置
                 .sessionManagement(sm -> sm.invalidSessionUrl("/logout/result")) // session超时跳转的页面url
-                // 8、 禁用CSRF过滤器验证(默认不配置为启用)
-//                .csrf(AbstractHttpConfigurer::disable) // 防止跨站点请求伪造(基本认证通常禁用CSRF)
-                // 9、CORS跨域配置
+                // 8、CORS跨域配置
 //                .cors(withDefaults())
-                // 10、创建SecurityFilterChain对象，返回
+                // 9、 禁用CSRF过滤器验证(默认不配置为启用)配置
+//                .csrf(AbstractHttpConfigurer::disable) // 防止跨站点请求伪造(基本认证通常禁用CSRF)
+                // 10、headers配置
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // 禁用frameOptions，防止系统页面被<iframe>、<object>标签嵌套劫持攻击
+                // 11、创建SecurityFilterChain对象，返回
                 .build(); // 直接构建，不再需要and()
     }
 
