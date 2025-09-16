@@ -35,7 +35,7 @@ public class UserService {
         sysUser1.setId(1);
         sysUser1.setUserName("test1");
         String pwd1 = passwordEncoder.encode("123456");
-        logger.info("【Spring Security】用户名{}，加密生成的密码{}，长度{}", username, pwd1, pwd1.length());
+        logger.info("【Spring Security】用户名{}，加密生成的密码{}，长度{}", sysUser1.getUserName(), pwd1, pwd1.length());
         sysUser1.setPwd(pwd1);
         sysUser1.setAvailable(1);
         sysUser1.setRoleList(List.of(userRole1));
@@ -44,7 +44,7 @@ public class UserService {
         sysUser2.setId(2);
         sysUser2.setUserName("admin");
         String pwd2 = passwordEncoder.encode("asdfgh");
-        logger.info("【Spring Security】用户名{}，加密生成的密码{}，长度{}", username, pwd2, pwd2.length());
+        logger.info("【Spring Security】用户名{}，加密生成的密码{}，长度{}", sysUser2.getUserName(), pwd2, pwd2.length());
         sysUser2.setPwd(pwd2);
         sysUser2.setAvailable(1);
         sysUser2.setRoleList(List.of(userRole1, userRole2));
