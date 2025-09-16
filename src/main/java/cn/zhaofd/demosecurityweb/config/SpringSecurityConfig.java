@@ -166,6 +166,9 @@ public class SpringSecurityConfig {
                 // 5、退出登录配置
                 .logout(logout -> logout.logoutUrl("/logout/page") // 自定义登出处理地址(表单post提交登录地址)，默认为/logout
                         .logoutSuccessUrl("/logout/result") // 登出成功后跳转的页面url
+                        .invalidateHttpSession(true) // 登出成功后，是否删除session
+                        .deleteCookies("JSESSIONID", "REMEMBER_ME") // 登出成功后，删除cookie
+                        .clearAuthentication(true) // 登出成功后，是否清除认证信息
                 ) // 自定义登出
                 // 6、HTTP基础认证配置
 //                .httpBasic(withDefaults()) // 启用HTTP基础认证（HTTP Basic验证是浏览器自动弹出简单的模态对话框的功能）
