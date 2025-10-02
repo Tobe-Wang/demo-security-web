@@ -20,7 +20,7 @@
 	</appender>
 
 	<!-- 设置包或类最低日志级别(TRACE、DEBUG、INFO、WARN、ERROR、ALL、OFF) -->
-<!--	<logger name="cn.zhaofd.coresecurityweb" level="OFF" />-->
+<!--	<logger name="cn.zhaofd.demosecurityweb" level="OFF" />-->
 
 	<!-- 设置全局默认最低日志级别(TRACE、DEBUG、INFO、WARN、ERROR、ALL、OFF) -->
 	<root level="INFO">
