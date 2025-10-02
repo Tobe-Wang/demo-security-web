@@ -132,9 +132,9 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                                 // 允许任何人（包括未认证的匿名用户）自由访问
                                 .requestMatchers("/login/page", "/logout/result", "/login/account").permitAll()
-                                // 限定"/file/**"下所有请求赋予角色ROLE_USER或者ROLE_ADMIN
+                                // 限定"/userAuth/**"下所有请求赋予角色ROLE_USER或者ROLE_ADMIN
                                 .requestMatchers("/userAuth/**").hasAnyRole("USER", "ADMIN") // hasAnyRoleO方法会默认加入前缀ROLE_
-                                // 限定"/excel/**"下所有请求权限赋予角色ROLE_ADMIN
+                                // 限定"/adminAuth/**", "/actuator/**"下所有请求权限赋予角色ROLE_ADMIN
 //                                .requestMatchers("/adminAuth/**", "/actuator/**").hasAuthority("ROLE_ADMIN") // hasAuthority()方法不会加入任何前缀
                                 .requestMatchers("/adminAuth/**", "/actuator/**").access(this.verifyAuth("ROLE_ADMIN")) // 自定义验证方法
                                 // 【对于所有未被前面规则匹配的请求路径】都需要认证
