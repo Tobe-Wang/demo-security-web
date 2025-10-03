@@ -33,7 +33,8 @@ import java.util.List;
  * Spring Security配置
  */
 @Configuration
-@EnableWebSecurity // 启用Spring Security。默认情况下只要引入了Spring Security依赖，配置就会自动生效，无需配置；安全配置类上保留@EnableWebSecurity，可以让代码的意图明确（建议保留）
+// 启用Spring Security。默认情况下只要引入了Spring Security依赖，配置就会自动生效，无需配置；安全配置类上保留@EnableWebSecurity，可以让代码的意图明确（建议保留）
+@EnableWebSecurity
 public class SpringSecurityConfig {
     private final PropertyConfig propertyConfig;
 
