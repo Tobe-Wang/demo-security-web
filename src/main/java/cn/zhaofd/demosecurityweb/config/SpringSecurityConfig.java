@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,6 +33,7 @@ import java.util.List;
  * Spring Security配置
  */
 @Configuration
+@EnableWebSecurity // 启用Spring Security。默认情况下只要引入了Spring Security依赖，配置就会自动生效，无需配置；安全配置类上保留@EnableWebSecurity，可以让代码的意图明确（建议保留）
 public class SpringSecurityConfig {
     private final PropertyConfig propertyConfig;
 
